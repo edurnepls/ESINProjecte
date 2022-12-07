@@ -1,0 +1,40 @@
+int num;
+int den;
+/* 
+Numerador (num) i denominador (den) del racional
+Si el numerador és 0 el denominador de la versió simpliﬁcada és necessàriament 1
+*/
+
+//Funcions Privades:
+
+//Aquesta funció retorna un racional que és la versió simplificada de r
+racional simp(const racional & r);
+/*
+PRE: cert
+POST: retorna la versió simplificada de r
+*/
+
+//Aquesta funció cal·lcula el mínim comú múltiple de dos enters
+int mcm(int div, int x, int y);
+/*
+PRE: div == 2, x e y != 0
+POST: el resultat és el mcm de x e y
+*/
+
+//Implementació funcions privades:
+
+racional racional::simp(const racional & r);
+
+int racional::mcm(int div, int x, int y)
+{
+	int aux=1;
+	while(x%div==0 || y%div==0)
+	{
+		aux*=div;
+		if(x%div==0) x/=div;
+		if(y%div==0) y/=div;
+	}
+	if(div<=x||div<=y) aux*=mcm(div+1,x,y);
+  	return aux;
+}
+

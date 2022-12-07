@@ -1,6 +1,0 @@
-int num;
-int den;
-/* 
-Numerador (num) i denominador (den) del racional
-Si el numerador és 0 el denominador de la versió simpliﬁcada és necessàriament 1
-*/

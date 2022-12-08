@@ -4,20 +4,20 @@
   // Es produeix un error si el denominador és 0.
   explicit racional::racional(int n=0, int d=1) throw(error)
   {
-  	num = n;
-  	den = d;
+  	_num = n;
+  	_den = d;
   }
 
   // Constructora per còpia, assignació i destructora.
   racional::racional(const racional & r) throw(error)
   {
-  	num = r.num;
-  	den = r.den;
+  	_num = r._num;
+  	_den = r._den;
   }
   racional & racional::operator=(const racional & r) throw(error)
   {
-  	num = r.num;
-  	den = r.den;
+  	_num = r._num;
+  	_den = r._den;
   }
   racional::~racional() throw()
   {}
@@ -26,19 +26,19 @@
   // positiva o negativa. El residu SEMPRE és un racional positiu.
   int racional::num() const throw()
   {
-  	return num;
+  	return _num;
   }
   int racional::denom() const throw()
   {
-  	return den;
+  	return _den;
   }
   int racional::part_entera() const throw()
   {
-  	return num/den;
+  	return _num/_den;
   }
   racional racional::residu() const throw()
   {
-  	return num%den;
+  	return _num%_den;
   }
 
   /* Sobrecàrrega d'operadors aritmètics. Retorna un racional en la seva
@@ -47,14 +47,14 @@
   racional racional::operator+(const racional & r) const throw(error) //falta error si el segon racional és 0
   {
   	   racional nR;
-     	if(den == r.den) {
-     		nR.num = num + r.num;
-     		nR.den = den;
+     	if(_den == r._den) {
+     		nR._num = _num + r._num;
+     		nR._den = _den;
      	} else {
-     		nR.den = mcm(2,r.den, den); 
-         r.num *= (nR.den%r.den);
-         num *= (nR.den%den);
-         nR.num = r.num + num;
+     		nR._den = mcm(2,r._den, _den); 
+         r._num *= (nR._den%r._den);
+         _num *= (nR._den%_den);
+         nR._num = r._num + _num;
      	}
       simp(2,nR,0,0);
       return nR;
@@ -62,14 +62,14 @@
   racional racional::operator-(const racional & r) const throw(error)
   {
       racional nR;
-      if(den == r.den) {
-         nR.num = num - r.num;
-         nR.den = den;
+      if(_den == r._den) {
+         nR._num = _num - r._num;
+         nR._den = _den;
       } else {
-         nR.den = mcm(2,r.den, den); 
-         r.num *= (nR.den%r.den);
-         num *= (nR.den%den);
-         nR.num = r.num - num;
+         nR._den = mcm(2,r._den, _den); 
+         r._num *= (nR._den%r._den);
+         _num *= (nR._den%_den);
+         nR._num = r._num - _num;
       }
       simp(2,nR,0,0);
       return nR;
@@ -77,16 +77,16 @@
   racional racional::racional::operator*(const racional & r) const throw(error)
   {
       racional nR;
-      nR.num = num * r.num;
-      nR.den = den * r.den;
+      nR._num = _num * r._num;
+      nR._den = _den * r._den;
       simp(2,nR,0,0);
       return nR;
   }
   racional racional::operator/(const racional & r) const throw(error)
   {
       racional nR;
-      nR.num = num * r.den;
-      nR.den = den * r.num;
+      nR._num = _num * r._den;
+      nR._den = _den * r._num;
       simp(2,nR,0,0);
       return nR;
   }
@@ -97,33 +97,67 @@
      que el racional r.*/
   bool racional::operator==(const racional & r) const throw()
   {
-      return num == r.num and den == r.den;
+      return _num == r._num and _den == r._den;
   }
   bool racional::operator!=(const racional & r) const throw()
   {
-      return num != r.num and den != r.den;
+      return _num != r._num and _den != r._den;
   }
   bool racional::operator<(const racional & r) const throw()
   {
       bool b = false;
-      if((num/den) < (r.num/r.den)) b = true;
+      if((_num/_den) < (r._num/r._den)) b = true;
       return b;
   }
   bool racional::operator<=(const racional & r) const throw()
   {
       bool b = false;
-      if((num/den) <= (r.num/r.den)) b = true;
+      if((_num/_den) <= (r._num/r._den)) b = true;
       return b;
   }
   bool racional::operator>(const racional & r) const throw()
   {
       bool b = false;
-      if((num/den) > (r.num/r.den)) b = true;
+      if((_num/_den) > (r._num/r._den)) b = true;
       return b;
   }
   bool racional::operator>=(const racional & r) const throw()
   {
       bool b = false;
-      if((num/den) >= (r.num/r.den)) b = true;
+      if((_num/_den) >= (r._num/r._den)) b = true;
       return b;
   }
+
+  //Implementació funcions privades:
+
+void racional::simp(int x, racional & r, int Nn, int Nd)
+{
+   if(r._num < 0) {r._num *= -1; Nn = 1;}
+   if(r._den < 0) {r._den *= -1; Nd = 1;}
+
+   if(r._num == 0) {
+      r._den = 1;
+   } else if(x <= r._num and x <= r._den) {
+      if(r._num%x == 0 and r._den%x == 0) {
+         r._num /= x; r._den /= x;
+         simp(x, r._num, r._den, Nn, Nd);
+      }
+      else simp(x+1, r._num, r._den, Nn, Nd);
+   }
+
+   if(Nn == 1) r._num *= -1;
+   if(Nd == 1) r._den *= -1;
+}
+
+int racional::mcm(int div, int x, int y)
+{
+   int aux=1;
+   while(x%div==0 || y%div==0)
+   {
+      aux*=div;
+      if(x%div==0) x/=div;
+      if(y%div==0) y/=div;
+   }
+   if(div<=x||div<=y) aux*=mcm(div+1,x,y);
+   return aux;
+}

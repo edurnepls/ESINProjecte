@@ -8,7 +8,7 @@ Si el numerador és 0 el denominador de la versió simpliﬁcada és necessària
 //Funcions Privades:
 
 //Aquesta funció retorna un racional que és la versió simplificada de r
-racional simp(const racional & r);
+void simp(racional & r, int Nn, int Nd);
 /*
 PRE: cert
 POST: retorna la versió simplificada de r
@@ -23,7 +23,24 @@ POST: el resultat és el mcm de x e y
 
 //Implementació funcions privades:
 
-racional racional::simp(const racional & r);
+void racional::simp(int x, racional & r, int Nn, int Nd)
+{
+	if(r.num < 0) {r.num *= -1; Nn = 1;}
+	if(r.den < 0) {r.den *= -1; Nd = 1;}
+
+	if(r.num == 0) {
+		r.den = 1;
+	} else if(x <= r.num and x <= r.den) {
+		if(r.num%x == 0 and r.den%x == 0) {
+			r.num /= x; r.den /= x;
+			simp(x, r.num, r.den, Nn, Nd);
+		}
+		else simp(x+1, r.num, r.den, Nn, Nd);
+	}
+
+	if(Nn == 1) r.num *= -1;
+	if(Nd == 1) r.den *= -1;
+}
 
 int racional::mcm(int div, int x, int y)
 {

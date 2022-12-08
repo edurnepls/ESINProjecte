@@ -56,7 +56,7 @@
       num *= (nR.den%den);
       nR.num = r.num + num;
   	}
-   //funció recursiva simp
+   simp(2,nR,0,0);
    return nR;
   }
   racional racional::operator-(const racional & r) const throw(error);

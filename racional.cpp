@@ -46,30 +46,84 @@
      error al dividir dos racionals si el segon és 0.*/
   racional racional::operator+(const racional & r) const throw(error) //falta error si el segon racional és 0
   {
-  	racional nR;
-  	if(den == r.den) {
-  		nR.num = num + r.num;
-  		nR.den = den;
-  	} else {
-  		nR.den = mcm(2,r.den, den); 
-      r.num *= (nR.den%r.den);
-      num *= (nR.den%den);
-      nR.num = r.num + num;
-  	}
-   simp(2,nR,0,0);
-   return nR;
+  	   racional nR;
+     	if(den == r.den) {
+     		nR.num = num + r.num;
+     		nR.den = den;
+     	} else {
+     		nR.den = mcm(2,r.den, den); 
+         r.num *= (nR.den%r.den);
+         num *= (nR.den%den);
+         nR.num = r.num + num;
+     	}
+      simp(2,nR,0,0);
+      return nR;
   }
-  racional racional::operator-(const racional & r) const throw(error);
-  racional racional::racional::operator*(const racional & r) const throw(error);
-  racional racional::operator/(const racional & r) const throw(error);
+  racional racional::operator-(const racional & r) const throw(error)
+  {
+      racional nR;
+      if(den == r.den) {
+         nR.num = num - r.num;
+         nR.den = den;
+      } else {
+         nR.den = mcm(2,r.den, den); 
+         r.num *= (nR.den%r.den);
+         num *= (nR.den%den);
+         nR.num = r.num - num;
+      }
+      simp(2,nR,0,0);
+      return nR;
+  }
+  racional racional::racional::operator*(const racional & r) const throw(error)
+  {
+      racional nR;
+      nR.num = num * r.num;
+      nR.den = den * r.den;
+      simp(2,nR,0,0);
+      return nR;
+  }
+  racional racional::operator/(const racional & r) const throw(error)
+  {
+      racional nR;
+      nR.num = num * r.den;
+      nR.den = den * r.num;
+      simp(2,nR,0,0);
+      return nR;
+  }
 
   /* Sobrecàrrega de operadors de comparació. Retornen cert, si i només si
      el racional sobre el que s'aplica el mètode és igual (==), diferent
      (!=), menor (<), menor o igual (<=), major (>) o major o igual(>=)
      que el racional r.*/
-  bool racional::operator==(const racional & r) const throw();
-  bool racional::operator!=(const racional & r) const throw();
-  bool racional::operator<(const racional & r) const throw();
-  bool racional::operator<=(const racional & r) const throw();
-  bool racional::operator>(const racional & r) const throw();
-  bool racional::operator>=(const racional & r) const throw();
+  bool racional::operator==(const racional & r) const throw()
+  {
+      return num == r.num and den == r.den;
+  }
+  bool racional::operator!=(const racional & r) const throw()
+  {
+      return num != r.num and den != r.den;
+  }
+  bool racional::operator<(const racional & r) const throw()
+  {
+      bool b = false;
+      if((num/den) < (r.num/r.den)) b = true;
+      return b;
+  }
+  bool racional::operator<=(const racional & r) const throw()
+  {
+      bool b = false;
+      if((num/den) <= (r.num/r.den)) b = true;
+      return b;
+  }
+  bool racional::operator>(const racional & r) const throw()
+  {
+      bool b = false;
+      if((num/den) > (r.num/r.den)) b = true;
+      return b;
+  }
+  bool racional::operator>=(const racional & r) const throw()
+  {
+      bool b = false;
+      if((num/den) >= (r.num/r.den)) b = true;
+      return b;
+  }

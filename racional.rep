@@ -1,7 +1,7 @@
-int num;
-int den;
+int _num;
+int _den;
 /* 
-Numerador (num) i denominador (den) del racional
+Numerador (_num) i denominador (_den) del racional
 Si el numerador és 0 el denominador de la versió simpliﬁcada és necessàriament 1
 */
 
@@ -20,38 +20,3 @@ int mcm(int div, int x, int y);
 PRE: div == 2, x e y != 0
 POST: el resultat és el mcm de x e y
 */
-
-//Implementació funcions privades:
-
-void racional::simp(int x, racional & r, int Nn, int Nd)
-{
-	if(r.num < 0) {r.num *= -1; Nn = 1;}
-	if(r.den < 0) {r.den *= -1; Nd = 1;}
-
-	if(r.num == 0) {
-		r.den = 1;
-	} else if(x <= r.num and x <= r.den) {
-		if(r.num%x == 0 and r.den%x == 0) {
-			r.num /= x; r.den /= x;
-			simp(x, r.num, r.den, Nn, Nd);
-		}
-		else simp(x+1, r.num, r.den, Nn, Nd);
-	}
-
-	if(Nn == 1) r.num *= -1;
-	if(Nd == 1) r.den *= -1;
-}
-
-int racional::mcm(int div, int x, int y)
-{
-	int aux=1;
-	while(x%div==0 || y%div==0)
-	{
-		aux*=div;
-		if(x%div==0) x/=div;
-		if(y%div==0) y/=div;
-	}
-	if(div<=x||div<=y) aux*=mcm(div+1,x,y);
-  	return aux;
-}
-

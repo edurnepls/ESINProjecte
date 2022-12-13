@@ -8,14 +8,14 @@ Si el numerador és 0 el denominador de la versió simpliﬁcada és necessària
 //Funcions Privades:
 
 //Aquesta funció retorna un racional que és la versió simplificada de r
-void simp(int x, racional & r, int Nn, int Nd);
+void simp(int x, racional & r, int Nn, int Nd) const;
 /*
 PRE: cert
 POST: retorna la versió simplificada de r
 */
 
 //Aquesta funció cal·lcula el mínim comú múltiple de dos enters
-int mcm(int div, int x, int y);
+int mcm(int div, int x, int y) const;
 /*
 PRE: div == 2, x e y != 0
 POST: el resultat és el mcm de x e y

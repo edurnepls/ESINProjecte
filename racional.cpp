@@ -2,10 +2,19 @@
 
 // Constructora. Construeix un racional en la seva versió simplificada.
   // Es produeix un error si el denominador és 0.
-  racional::racional(int n=0, int d=1) throw(error)
+  racional::racional(int n, int d) throw(error)
   {
-     	_num = n;
-     	_den = d;
+      try {
+         if(_den != 0) {
+            _num = n;
+            _den = d;
+         } else {
+            throw (_den);
+         }
+      }
+      catch(int _den) {
+         std::cout << "Error" << std::endl;
+      }
   }
 
   // Constructora per còpia, assignació i destructora.
@@ -14,7 +23,7 @@
      	_num = r._num;
      	_den = r._den;
   }
-  racional & racional::operator=(const racional & r) throw(error)
+  racional& racional::operator=(const racional & r) throw(error)
   {
      	_num = r._num;
      	_den = r._den;
@@ -130,7 +139,7 @@
 
   //Implementació funcions privades:
 
-void racional::simp(int x, racional & r, int Nn, int Nd)
+void racional::simp(int x, racional & r, int Nn, int Nd) const
 {
    if(r._num < 0) {r._num *= -1; Nn = 1;}
    if(r._den < 0) {r._den *= -1; Nd = 1;}
@@ -149,7 +158,7 @@ void racional::simp(int x, racional & r, int Nn, int Nd)
    if(Nd == 1) r._den *= -1;
 }
 
-int racional::mcm(int div, int x, int y)
+int racional::mcm(int div, int x, int y) const
 {
    int aux=1;
    while(x%div==0 || y%div==0)

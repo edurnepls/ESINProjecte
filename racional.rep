@@ -8,7 +8,7 @@ Si el numerador és 0 el denominador de la versió simpliﬁcada és necessària
 //Funcions Privades:
 
 //Aquesta funció retorna un racional que és la versió simplificada de r
-void simp(racional & r, int Nn, int Nd);
+void simp(int x, racional & r, int Nn, int Nd);
 /*
 PRE: cert
 POST: retorna la versió simplificada de r

@@ -2,22 +2,23 @@
 
 // Constructora. Construeix un racional en la seva versió simplificada.
   // Es produeix un error si el denominador és 0.
-  explicit racional::racional(int n=0, int d=1) throw(error)
+  racional::racional(int n=0, int d=1) throw(error)
   {
-  	_num = n;
-  	_den = d;
+     	_num = n;
+     	_den = d;
   }
 
   // Constructora per còpia, assignació i destructora.
   racional::racional(const racional & r) throw(error)
   {
-  	_num = r._num;
-  	_den = r._den;
+     	_num = r._num;
+     	_den = r._den;
   }
   racional & racional::operator=(const racional & r) throw(error)
   {
-  	_num = r._num;
-  	_den = r._den;
+     	_num = r._num;
+     	_den = r._den;
+      return *this;
   }
   racional::~racional() throw()
   {}
@@ -26,19 +27,22 @@
   // positiva o negativa. El residu SEMPRE és un racional positiu.
   int racional::num() const throw()
   {
-  	return _num;
+  	   return _num;
   }
   int racional::denom() const throw()
   {
-  	return _den;
+  	   return _den;
   }
   int racional::part_entera() const throw()
   {
-  	return _num/_den;
+  	   return _num/_den;
   }
   racional racional::residu() const throw()
   {
-  	return _num%_den;
+  	   racional nR;
+      nR._num = _num%_den;
+      nR._den = 1;
+      return nR; 
   }
 
   /* Sobrecàrrega d'operadors aritmètics. Retorna un racional en la seva
@@ -51,10 +55,8 @@
      		nR._num = _num + r._num;
      		nR._den = _den;
      	} else {
-     		nR._den = mcm(2,r._den, _den); 
-         r._num *= (nR._den%r._den);
-         _num *= (nR._den%_den);
-         nR._num = r._num + _num;
+     		nR._den = mcm(2,r._den,_den);
+         nR._num = (r._num*(nR._den%r._den)) + (_num*(nR._den%_den));
      	}
       simp(2,nR,0,0);
       return nR;
@@ -66,10 +68,8 @@
          nR._num = _num - r._num;
          nR._den = _den;
       } else {
-         nR._den = mcm(2,r._den, _den); 
-         r._num *= (nR._den%r._den);
-         _num *= (nR._den%_den);
-         nR._num = r._num - _num;
+         nR._den = mcm(2,r._den, _den);
+         nR._num = (r._num*(nR._den%r._den)) - (_num*(nR._den%_den));
       }
       simp(2,nR,0,0);
       return nR;
@@ -140,9 +140,9 @@ void racional::simp(int x, racional & r, int Nn, int Nd)
    } else if(x <= r._num and x <= r._den) {
       if(r._num%x == 0 and r._den%x == 0) {
          r._num /= x; r._den /= x;
-         simp(x, r._num, r._den, Nn, Nd);
+         simp(x,r,Nn,Nd);
       }
-      else simp(x+1, r._num, r._den, Nn, Nd);
+      else simp(x+1,r,Nn,Nd);
    }
 
    if(Nn == 1) r._num *= -1;

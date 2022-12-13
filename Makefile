@@ -1,4 +1,4 @@
-OPCIONS = -g -O0 -std=c++03 -Wall -lesin -Wno-deprecated
+OPCIONS = -g -O0 -std=c++03 -Wall -lesin -Wno-deprecated -fpermissive
 
 program.exe: program.o racional.o
 		g++ -o program.exe program.o racional.o 

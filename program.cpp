@@ -1,9 +1,23 @@
-#include "racional.hpp"
+#include "token.hpp"
 #include <iostream>
 using namespace std;
 
-/*int main()
+void print_tp(token::codi c)
 {
+	const string cod[] = {"NULLTOK","CT_ENTERA", "CT_RACIONAL", "CT_REAL", "CT_E","VARIABLE", 
+						"VAR_PERCENTATGE", "SUMA", "RESTA", "MULTIPLICACIO", "DIVISIO", "EXPONENCIACIO",
+             			"CANVI_DE_SIGNE", "SIGNE_POSITIU","SQRT", "EXP", "LOG", "EVALF", "OBRIR_PAR", 
+             			"TANCAR_PAR", "COMA", "ASSIGNACIO", "DESASSIGNACIO", "BYEBYE"}; 
+    std::cout << cod[c] << std::endl;
+}
+
+int main()
+{
+	token t(17);
+	print_tp(t.tipus());
+	cout << t.valor_enter() << endl;
+}
+/*{
 	racional x,y,z;
 	
 	leer("Cuanto vale x?" , x );

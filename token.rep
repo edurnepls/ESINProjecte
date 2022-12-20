@@ -1,15 +1,25 @@
 
-union token_var {
-	const int x; //constants enters
-	const double d; //racionals o reals (en coma flotant)
-	const char var; //variables
+/*
+union
+{
+	int x; 		//constants enters
+	racional r; 	//racionals 
+	double d;	//reals (en coma flotant)
+	char var; 	//variables
 
-	const float e; //nombre de Euler
-	const char varP; //variable predefinida %
+	float e; 	//nombre de Euler
+	char varP; 	//variable predefinida %
 
-	const char op; //operadors: +, -, *, /, ^, - (canvi de signe), + (signe positiu)
-	const string fp; //funcions predefinides: sqrt, exp, log, evalf;
-	const string com; //comandes := (assignació), unassign (desassignació), byebye (final de sessió)
-} _t;
+	char op; 	//operadors: +, -, *, /, ^, - (canvi de signe), + (signe positiu)
+	/*string fp; 	//funcions predefinides: sqrt, exp, log, evalf;
+	string com; //comandes := (assignació), unassign (desassignació), byebye (final de sessió)*/
+//} _t;*/
 
-codi _s; //codi del token
+void *p_element;
+
+enum codi _s; //codi del token
+
+//Funcions privades
+void print_tp() const throw(error);
+/*Aquesta uncí treu per pantalla de quin tipus és aquest token (NULLTOK, CT_ENTERA, etc.)
+depenent del seu codi */

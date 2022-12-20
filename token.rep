@@ -1,0 +1,15 @@
+
+union token_var {
+	const int x; //constants enters
+	const double d; //racionals o reals (en coma flotant)
+	const char var; //variables
+
+	const float e; //nombre de Euler
+	const char varP; //variable predefinida %
+
+	const char op; //operadors: +, -, *, /, ^, - (canvi de signe), + (signe positiu)
+	const string fp; //funcions predefinides: sqrt, exp, log, evalf;
+	const string com; //comandes := (assignació), unassign (desassignació), byebye (final de sessió)
+} _t;
+
+codi _s; //codi del token

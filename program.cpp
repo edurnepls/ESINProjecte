@@ -1,6 +1,8 @@
 #include "racional.hpp"
+#include <iostream>
+using namespace std;
 
-int main()
+/*int main()
 {
 	racional x,y,z;
 	
@@ -11,14 +13,14 @@ int main()
 
 }
 
-void leer(const char *mensaje, racional r) {
+void leer(const char *mensaje, racional & r) {
 	int a, b;
 	std::cout << "Escriba el numerador del racional:" << std::endl;
 	std::cin >> a >> std::endl;
 	std::cout << "Escriba el denominador del racional:" << std::endl;
 	std::cin >> b >> std::endl;
-	r.num = a;
-	r.denom = b;
+	r._num = a;
+	r._den = b;
 }
 
 void escribir(const char *mensaje, racional r) {
@@ -29,4 +31,4 @@ void escribir(const char *mensaje, racional r) {
 }
 
 //Faltan las operaciones, no esta compilado porque esta hecho con visual studio desde mi poratatil.
-//Cuando  llegue a casa lo sigo progrmando con linux
+//Cuando  llegue a casa lo sigo progrmando con linux*/

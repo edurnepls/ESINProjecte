@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-void print_tp(token::codi c)
+void print_tp(int c)
 {
 	const string cod[] = {"NULLTOK","CT_ENTERA", "CT_RACIONAL", "CT_REAL", "CT_E","VARIABLE", 
 						"VAR_PERCENTATGE", "SUMA", "RESTA", "MULTIPLICACIO", "DIVISIO", "EXPONENCIACIO",
@@ -13,9 +13,18 @@ void print_tp(token::codi c)
 
 int main()
 {
-	token t(17);
-	print_tp(t.tipus());
+	token t1(-17);
+	token t2(89);
+	print_tp(t1.tipus()); print_tp(t2.tipus());
+	cout << t1.valor_enter() << ' ' << t2.valor_enter() << endl;
+	if(t1 == t2) cout << "true" << endl;
+	else cout << "false" << endl;
+	/*print_tp(t.tipus());
 	cout << t.valor_enter() << endl;
+	//valor racional
+	racional r = t.valor_racional();
+	cout << t.valor_real() << endl;
+	cout << t.identificador_variable() << endl;*/
 }
 /*{
 	racional x,y,z;

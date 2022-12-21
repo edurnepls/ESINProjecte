@@ -1,25 +1,13 @@
 
-/*
-union
-{
-	int x; 		//constants enters
-	racional r; 	//racionals 
-	double d;	//reals (en coma flotant)
-	char var; 	//variables
-
-	float e; 	//nombre de Euler
-	char varP; 	//variable predefinida %
-
-	char op; 	//operadors: +, -, *, /, ^, - (canvi de signe), + (signe positiu)
-	/*string fp; 	//funcions predefinides: sqrt, exp, log, evalf;
-	string com; //comandes := (assignació), unassign (desassignació), byebye (final de sessió)*/
-//} _t;*/
-
-void *p_element;
+const void *p_element;
 
 enum codi _s; //codi del token
 
 //Funcions privades
 void print_tp() const throw(error);
-/*Aquesta uncí treu per pantalla de quin tipus és aquest token (NULLTOK, CT_ENTERA, etc.)
+/*Aquesta funció treu per pantalla de quin tipus és aquest token (NULLTOK, CT_ENTERA, etc.)
 depenent del seu codi */
+
+bool valid_var(const string & var);
+/*Aquesta funció ens indica si el nom que ens estan proposant per a anomenar una variable és 
+correcte*/

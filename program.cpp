@@ -13,12 +13,17 @@ void print_tp(int c)
 
 int main()
 {
-	token t1(-17);
-	token t2(89);
-	print_tp(t1.tipus()); print_tp(t2.tipus());
+	token t1(1), t2(1);
+	print_tp(t1.tipus()); 
+	print_tp(t2.tipus());
 	cout << t1.valor_enter() << ' ' << t2.valor_enter() << endl;
 	if(t1 == t2) cout << "true" << endl;
 	else cout << "false" << endl;
+
+	//proves void pointer
+	int x = 10;
+	void *p = &x;
+	cout << *((int *)p) << endl;
 	/*print_tp(t.tipus());
 	cout << t.valor_enter() << endl;
 	//valor racional

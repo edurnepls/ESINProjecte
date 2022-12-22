@@ -5,7 +5,6 @@ token::token(codi cod) throw(error)
 {
 	try {
 		if((cod < 1 and cod > 3) and cod != 5) {
-			p_element = new string;
 			_s = cod;
 		} else {
 			throw (cod);
@@ -69,7 +68,8 @@ token::token(const string & var_name) throw(error)
 //Constructora por còpia, assignació i destructora
 token::~token() throw()
 {
-
+	delete(p_element);
+	_s = NULLTOK;
 }
 
 //Consultores
@@ -93,7 +93,6 @@ int token::valor_enter() const throw(error)
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
 	}
-	return 0;
 }
 
 racional token::valor_racional() const throw(error)
@@ -159,6 +158,15 @@ bool token::operator!=(const token & t) const throw()
 
 }
 //Precedència entre tokens
+bool token::operator>(const token & t) const throw(error)
+{
+
+}
+
+bool token::operator<(const token & t) const throw(error)
+{
+
+}
 
 //Implementació funcions privades
 /*void token::print_tp() const throw(error)

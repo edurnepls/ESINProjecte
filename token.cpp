@@ -66,6 +66,19 @@ token::token(const string & var_name) throw(error)
 }
 
 //Constructora por còpia, assignació i destructora
+/*token::token(const token & t) throw (error)
+{
+	_s = t._s;
+	p_element = t.p_element;
+}
+
+token& token::operator=(const token & t) throw(error)
+{
+	_s = t._s;
+	p_element = t.p_element;
+	return *this;
+}
+*/
 token::~token() throw()
 {
 	delete(p_element);

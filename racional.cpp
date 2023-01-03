@@ -5,7 +5,7 @@
   racional::racional(int n, int d) throw(error)
   {
       try {
-         if (_den != 0) {
+         if (d != 0) {
             _num = n;
             _den = d;
          } else {
@@ -13,7 +13,7 @@
          }
       }
       catch(int _den) {
-         std::cout << "Error" << std::endl;
+         std::cout << "Error" << _den << std::endl;
       }
   }
 

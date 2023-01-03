@@ -7,10 +7,10 @@ token::token(codi cod) throw(error)
 		if((cod < 1 and cod > 3) and cod != 5) {
 			_s = cod;
 		} else {
-			throw (cod);
+			throw error(ConstructoraInadequada);
 		}
 	}
-	catch (codi cod){
+	catch (...){
 		std::cout << "Error::token:12:La constructora per aquest token no es l'adequada." << std::endl;
 	}
 }
@@ -19,7 +19,7 @@ token::token(int n) throw(error)
 {
 	try {
 		p_element = new int;
-		p_element = &n;
+		*(int*)p_element = n;
 		_s = CT_ENTERA;
 	}
 	catch (...) {
@@ -30,8 +30,9 @@ token::token(int n) throw(error)
 token::token(const racional & r) throw(error)
 {
 	try {
+		racional n = r;
 		p_element = new racional;
-		p_element = &r;
+		*(racional*)p_element = n;
 		_s = CT_RACIONAL;
 	}
 	catch (...) {
@@ -43,7 +44,7 @@ token::token(double x) throw(error)
 {
 	try {
 		p_element = new double;
-		p_element = &x;
+		*(double*)p_element = x;
 		_s = CT_REAL;
 	}
 	catch (...) {
@@ -55,8 +56,9 @@ token::token(const string & var_name) throw(error)
 {
 	try {
 		if(this->valid_var(var_name)) {
+			string n = var_name;
 			p_element = new string;
-			p_element = &var_name;
+			*(string*)p_element = n;
 			_s = VARIABLE;
 		} else throw 11;
 	}
@@ -66,7 +68,7 @@ token::token(const string & var_name) throw(error)
 }
 
 //Constructora por còpia, assignació i destructora
-/*token::token(const token & t) throw (error)
+token::token(const token & t) throw (error)
 {
 	_s = t._s;
 	p_element = t.p_element;
@@ -78,7 +80,7 @@ token& token::operator=(const token & t) throw(error)
 	p_element = t.p_element;
 	return *this;
 }
-*/
+
 token::~token() throw()
 {
 	delete(p_element);
@@ -98,65 +100,72 @@ token::codi token::tipus() const throw()
 
 int token::valor_enter() const throw(error)
 {
+	int ret;
 	try {
-		if (_s == 1) {
-			return *(int *)p_element;
-		} else throw 13;
+		if (_s == CT_ENTERA) {
+			ret = *(int *)p_element;
+		} else throw (13);
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
 	}
+	return ret;
 }
 
 racional token::valor_racional() const throw(error)
 {
+	racional ret;
 	try {
-		if (_s == 2) {
-			return *((racional*)p_element);
+		if (_s == CT_RACIONAL) {
+			ret = *(racional*)p_element;
 		} else throw 13;
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
 	}
+	return ret;
 }
 
 double token::valor_real() const throw(error)
 {
+	double ret;
 	try {
-		if (_s == 3) {
-			return *((double*)p_element);
+		if (_s == CT_REAL) {
+			ret = *((double*)p_element);
 		} else throw 13;
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
 	}
-	return 0;
+	return ret;
 }
 
 string token::identificador_variable() const throw(error)
 {
+	string ret;
 	try {
-		if (_s == 5) {
-			return *((string*)p_element);
+		if (_s == VARIABLE) {
+			ret = *((string*)p_element);
 		} else throw 13;
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
 	}
+	return ret;
 }
 
 //Igualtat i desigualtat entre tokens
 bool token::operator==(const token & t) const throw()
 {
 	if(_s == t._s) { //són iguals; comparem
-		if(_s == 1) { //int
+		if(_s == CT_ENTERA) { //int
 			return *((int *)p_element) == *((int *)t.p_element); 
 		} 
-		else if (_s == 2) { //racional
+		else if (_s == CT_RACIONAL) { //racional
 			racional r1 = *(racional *)p_element, r2 = *(racional *)t.p_element;
 			return ((r1.num() == r2.num()) and (r1.denom() == r2.denom()));
 		}
-		else if (_s == 3) { //real
+		else if (_s == CT_REAL) { //real
 			return *((double *)p_element) == *((double *)t.p_element);
 		}
 		else { //variable o operadors, funcions predefinides, noms de comandes o símbols de ``puntuació''
@@ -168,8 +177,24 @@ bool token::operator==(const token & t) const throw()
 
 bool token::operator!=(const token & t) const throw()
 {
-
+	if(_s != t._s) {
+		if(_s == CT_ENTERA) { //int
+			return *((int *)p_element) != *((int *)t.p_element); 
+		} 
+		else if (_s == CT_RACIONAL) { //racional
+			racional r1 = *(racional *)p_element, r2 = *(racional *)t.p_element;
+			return ((r1.num() != r2.num()) and (r1.denom() != r2.denom()));
+		}
+		else if (_s == CT_REAL) { //real
+			return *((double *)p_element) != *((double *)t.p_element);
+		}
+		else { //variable o operadors, funcions predefinides, noms de comandes o símbols de ``puntuació''
+			return *((string *)p_element) != *((string *)t.p_element);
+		}
+	}
+	return false;
 }
+
 //Precedència entre tokens
 bool token::operator>(const token & t) const throw(error)
 {

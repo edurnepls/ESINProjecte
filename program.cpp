@@ -1,5 +1,7 @@
 #include "token.hpp"
 #include <iostream>
+#include <bits/stdc++.h>
+#include <vector>
 using namespace std;
 
 void print_tp(int c)
@@ -11,19 +13,74 @@ void print_tp(int c)
     std::cout << cod[c] << std::endl;
 }
 
+bool is_cod(const string s) {
+	const string cod[] = {"NULLTOK","CT_ENTERA", "CT_RACIONAL", "CT_REAL", "CT_E","VARIABLE", 
+						"VAR_PERCENTATGE", "SUMA", "RESTA", "MULTIPLICACIO", "DIVISIO", "EXPONENCIACIO",
+             			"CANVI_DE_SIGNE", "SIGNE_POSITIU","SQRT", "EXP", "LOG", "EVALF", "OBRIR_PAR", 
+             			"TANCAR_PAR", "COMA", "ASSIGNACIO", "DESASSIGNACIO", "BYEBYE"};
+    bool trobat = false;
+    unsigned int i = 0;
+    while(i < sizeof(cod) and !trobat) {
+    	if(s == cod[i]) trobat = true;
+    	else ++i;
+    }
+    return trobat;
+}
+
+void string_to_cod(const string s, token::codi &cod) {
+	if(s == "NULLTOK") cod = token::NULLTOK;
+	else if(s == "CT_ENTERA") cod = token::CT_ENTERA;
+	else if(s == "CT_RACIONAL") cod = token::CT_RACIONAL;
+	else if(s == "CT_REAL") cod = token::CT_REAL;
+	else if(s == "CT_E") cod = token::CT_E;
+	else if(s == "VARIABLE") cod = token::VARIABLE;
+	else if(s == "VAR_PERCENTATGE") cod = token::VAR_PERCENTATGE;
+	else if(s == "SUMA") cod = token::SUMA;
+	else if(s == "RESTA") cod = token::RESTA;
+	else if(s == "MULTIPLICACIO") cod = token::MULTIPLICACIO;
+	else if(s == "DIVISIO") cod = token::DIVISIO;
+	else if(s == "EXPONENCIACIO") cod = token::EXPONENCIACIO;
+	else if(s == "CANVI_DE_SIGNE") cod = token::CANVI_DE_SIGNE;
+	else if(s == "SIGNE_POSITIU") cod = token::SIGNE_POSITIU;
+	else if(s == "SQRT") cod = token::SQRT;
+	else if(s == "EXP") cod = token::EXP;
+	else if(s == "LOG") cod = token::LOG;
+	else if(s == "EVALF") cod = token::EVALF;
+	else if(s == "OBRIR_PAR") cod = token::OBRIR_PAR;
+	else if(s == "TANCAR_PAR") cod = token::TANCAR_PAR;
+	else if(s == "COMA") cod = token::COMA;
+	else if(s == "ASSIGNACIO") cod = token::ASSIGNACIO;
+	else if(s == "DESASSIGNACIO") cod = token::DESASSIGNACIO;
+	else cod = token::BYEBYE;
+}
+
 int main()
 {
-	token t1(1), t2(1);
-	print_tp(t1.tipus()); 
-	print_tp(t2.tipus());
-	cout << t1.valor_enter() << ' ' << t2.valor_enter() << endl;
-	if(t1 == t2) cout << "true" << endl;
-	else cout << "false" << endl;
+	string str;
+	vector<token> v;
 
+	while(getline(cin, str)) {
+		istringstream ss(str);
+		string ord;
+		ss >> ord;
+		if(ord == "init") { //constructora init
+			string name, tipus, val;
+			ss >> ord; name = ord;
+			ss >> ord; tipus = ord;
+			ss >> ord; val = ord;
+			if(tipus == "token") { //creando token
+				if(is_cod(ord)) { // es codi
+					token::codi cod;
+					string_to_cod(ord,cod);
+					token t1(cod);
+				}
+			}
+		}
+	}
 	//proves void pointer
-	int x = 10;
+	/*int x = 10;
 	void *p = &x;
-	cout << *((int *)p) << endl;
+	cout << *((int *)p) << endl;*/
 	/*print_tp(t.tipus());
 	cout << t.valor_enter() << endl;
 	//valor racional

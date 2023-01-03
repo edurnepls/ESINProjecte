@@ -1,5 +1,5 @@
 
-const void *p_element = NULL;
+void *p_element;
 
 enum codi _s; //codi del token
 

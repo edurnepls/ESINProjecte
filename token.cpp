@@ -4,7 +4,7 @@
 token::token(codi cod) throw(error)
 {
 	try {
-		if((cod < 1 and cod > 3) and cod != 5) {
+		if(cod != CT_ENTERA and cod != CT_RACIONAL and cod != CT_REAL and cod != VARIABLE) {
 			_s = cod;
 		} else {
 			throw error(ConstructoraInadequada);
@@ -198,12 +198,98 @@ bool token::operator!=(const token & t) const throw()
 //Precedència entre tokens
 bool token::operator>(const token & t) const throw(error)
 {
-
+	bool gran = true;
+	try {
+		if((_s > 6 and _s < 14) and (t._s > 6 and t._s < 14)) {
+			if(_s == t._s) gran = false; 
+			else if(_s == EXPONENCIACIO) gran = true;
+			else if(t._s == EXPONENCIACIO) gran = false;
+			else if(_s == CANVI_DE_SIGNE and t._s != EXPONENCIACIO) gran = true;
+			else if(_s == CANVI_DE_SIGNE and t._s == EXPONENCIACIO) gran = false;
+			else if(_s == SIGNE_POSITIU and (t._s != EXPONENCIACIO
+										and t._s != CANVI_DE_SIGNE)) gran = true;
+			else if(_s == SIGNE_POSITIU and (t._s == EXPONENCIACIO 
+										or t._s == CANVI_DE_SIGNE)) gran = false;
+			else if(_s == MULTIPLICACIO and (t._s != EXPONENCIACIO
+										and t._s != CANVI_DE_SIGNE
+										and t._s != SIGNE_POSITIU)) gran = true;
+			else if(_s == MULTIPLICACIO and (t._s == EXPONENCIACIO
+										or t._s == CANVI_DE_SIGNE
+										or t._s == SIGNE_POSITIU)) gran = false;
+			else if(_s == DIVISIO and (t._s != EXPONENCIACIO
+									and t._s != CANVI_DE_SIGNE
+									and t._s != SIGNE_POSITIU
+									and t._s != MULTIPLICACIO)) gran = true;
+			else if(_s == DIVISIO and (t._s == EXPONENCIACIO
+									or t._s == CANVI_DE_SIGNE
+									or t._s == SIGNE_POSITIU
+									or t._s == MULTIPLICACIO)) gran = false;
+			else if(_s == SUMA and (t._s != EXPONENCIACIO
+								and t._s != CANVI_DE_SIGNE
+								and t._s != SIGNE_POSITIU
+								and t._s != MULTIPLICACIO
+								and t._s != DIVISIO)) gran = true;
+			else if(_s == SUMA and (t._s == EXPONENCIACIO
+								or t._s == CANVI_DE_SIGNE
+								or t._s == SIGNE_POSITIU
+								or t._s == MULTIPLICACIO
+								or t._s == DIVISIO)) gran = false;
+			else gran = false; //this->_s == RESTA; sempre serà fals
+		}
+		else throw error(PrecedenciaEntreNoOperadors);
+	}
+	catch (...) {
+		std::cout << "Error::token:14:La precedencia es defineix entre operadors." << std::endl;
+	}
+	return gran;
 }
 
 bool token::operator<(const token & t) const throw(error)
 {
-
+	bool petit = true;
+	try {
+		if((_s > 6 and _s < 14) and (t._s > 6 and t._s < 14)) {
+			if(_s == t._s) petit = false; 
+			else if(_s == EXPONENCIACIO) petit = false;
+			else if(t._s == EXPONENCIACIO) petit = true;
+			else if(_s == CANVI_DE_SIGNE and t._s != EXPONENCIACIO) petit = false;
+			else if(_s == CANVI_DE_SIGNE and t._s == EXPONENCIACIO) petit = true;
+			else if(_s == SIGNE_POSITIU and (t._s != EXPONENCIACIO
+										and t._s != CANVI_DE_SIGNE)) petit = false;
+			else if(_s == SIGNE_POSITIU and (t._s == EXPONENCIACIO 
+										or t._s == CANVI_DE_SIGNE)) petit = true;
+			else if(_s == MULTIPLICACIO and (t._s != EXPONENCIACIO
+										and t._s != CANVI_DE_SIGNE
+										and t._s != SIGNE_POSITIU)) petit = false;
+			else if(_s == MULTIPLICACIO and (t._s == EXPONENCIACIO
+										or t._s == CANVI_DE_SIGNE
+										or t._s == SIGNE_POSITIU)) petit = true;
+			else if(_s == DIVISIO and (t._s != EXPONENCIACIO
+									and t._s != CANVI_DE_SIGNE
+									and t._s != SIGNE_POSITIU
+									and t._s != MULTIPLICACIO)) petit = false;
+			else if(_s == DIVISIO and (t._s == EXPONENCIACIO
+									or t._s == CANVI_DE_SIGNE
+									or t._s == SIGNE_POSITIU
+									or t._s == MULTIPLICACIO)) petit = true;
+			else if(_s == SUMA and (t._s != EXPONENCIACIO
+								and t._s != CANVI_DE_SIGNE
+								and t._s != SIGNE_POSITIU
+								and t._s != MULTIPLICACIO
+								and t._s != DIVISIO)) petit = false;
+			else if(_s == SUMA and (t._s == EXPONENCIACIO
+								or t._s == CANVI_DE_SIGNE
+								or t._s == SIGNE_POSITIU
+								or t._s == MULTIPLICACIO
+								or t._s == DIVISIO)) petit = true;
+			else petit = false; //this->_s == RESTA; sempre serà fals
+		}
+		else throw error(PrecedenciaEntreNoOperadors);
+	}
+	catch (...) {
+		std::cout << "Error::token:14:La precedencia es defineix entre operadors." << std::endl;
+	}
+	return petit;
 }
 
 //Implementació funcions privades

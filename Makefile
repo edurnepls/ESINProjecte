@@ -1,7 +1,7 @@
 OPCIONS = -g -O0 -std=c++03 -Wall -lesin -Wno-deprecated
 
 program.exe: program.o racional.o token.o
-		g++ -o program.exe program.o racional.o token.o
+		g++ -o program.exe program.o racional.o token.o -lesin
 		rm *.o 
 
 program.o: program.cpp racional.hpp racional.cpp token.hpp token.cpp

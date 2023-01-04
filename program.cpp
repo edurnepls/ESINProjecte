@@ -4,6 +4,8 @@
 #include <vector>
 using namespace std;
 
+#define MAX_SIZE 100
+
 void print_tp(int c)
 {
 	const string cod[] = {"NULLTOK","CT_ENTERA", "CT_RACIONAL", "CT_REAL", "CT_E","VARIABLE", 
@@ -56,14 +58,39 @@ void string_to_cod(const string s, token::codi &cod) {
 
 int main()
 {
-	string str;
-	vector<token> v;
+	token t1(token::CT_E);
+
+	//tipus
+	print_tp(t1.tipus());
+	//valor_enter
+	int *tmp = NULL;
+	&tmp = t1.valor_enter();
+	if(tmp != NULL) cout << *tmp << endl;
+	//valor_racional
+	racional r = t1.valor_racional();
+	cout << r.num() << '/' << r.denom() << endl;
+	//valor_real
+	cout << t1.valor_real() << endl;
+	//identificador_variable
+	cout << t1.identificador_variable() << endl;
+
+	/*string str;
+	token Arr_tk[MAX_SIZE];
+	unsigned int i = 0;
 
 	while(getline(cin, str)) {
+		token tmp; //token temporal que fem servir per accedir al Arr_tk
+		try {
+			if(i >= 1) tmp = Arr_tk[i-1];
+		}
+		catch (...) {}
+
 		istringstream ss(str);
 		string ord;
 		ss >> ord;
+
 		if(ord == "init") { //constructora init
+			token T; //token temporal que fem servir per poder guardar el token al Arr_tk
 			string name, tipus, val;
 			ss >> ord; name = ord;
 			ss >> ord; tipus = ord;
@@ -72,11 +99,33 @@ int main()
 				if(is_cod(ord)) { // es codi
 					token::codi cod;
 					string_to_cod(ord,cod);
+					cout << cod << endl;
 					token t1(cod);
+					T = t1;
 				}
+
+				//push t1 en el Arr_tk
+				Arr_tk[i] = T;
+				++i;
 			}
-		}
-	}
+		} 
+		else if(ord == "tp") {
+			print_tp(tmp.tipus());
+		} 
+		else if(ord == "ve") {
+			cout << tmp.valor_enter() << endl;
+		} 
+		else if(ord == "vra") {
+			racional r_tmp = tmp.valor_racional();
+			cout << r_tmp.num() << '/' << r_tmp.denom() << endl;
+		} 
+		else if(ord == "vre") {
+			cout << tmp.valor_real() << endl;
+		} 
+		else if(ord == "idvar") {
+			cout << tmp.identificador_variable() << endl;
+		}	
+	}*/
 	//proves void pointer
 	/*int x = 10;
 	void *p = &x;

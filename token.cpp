@@ -60,7 +60,7 @@ token::token(const string & var_name) throw(error)
 			p_element = new string;
 			*(string*)p_element = n;
 			_s = VARIABLE;
-		} else throw 11;
+		} else throw error(IdentificadorIncorrecte);
 	}
 	catch (...) {
 		std::cout << "Error::token:11:El nom de la variable no es valid." << std::endl;
@@ -104,7 +104,7 @@ int token::valor_enter() const throw(error)
 	try {
 		if (_s == CT_ENTERA) {
 			ret = *(int *)p_element;
-		} else throw (13);
+		} else throw error(ConsultoraInadequada);
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
@@ -118,7 +118,7 @@ racional token::valor_racional() const throw(error)
 	try {
 		if (_s == CT_RACIONAL) {
 			ret = *(racional*)p_element;
-		} else throw 13;
+		} else throw error(ConsultoraInadequada);
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
@@ -132,7 +132,7 @@ double token::valor_real() const throw(error)
 	try {
 		if (_s == CT_REAL) {
 			ret = *((double*)p_element);
-		} else throw 13;
+		} else throw error(ConsultoraInadequada);
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;
@@ -146,7 +146,7 @@ string token::identificador_variable() const throw(error)
 	try {
 		if (_s == VARIABLE) {
 			ret = *((string*)p_element);
-		} else throw 13;
+		} else throw error(ConsultoraInadequada);
 	}
 	catch (...) {
 		std::cout << "Error::token:13:Aquesta consultora del token no es apropiada." << std::endl;

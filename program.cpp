@@ -58,23 +58,7 @@ void string_to_cod(const string s, token::codi &cod) {
 
 int main()
 {
-	token t1(token::CT_E);
-
-	//tipus
-	print_tp(t1.tipus());
-	//valor_enter
-	int *tmp = NULL;
-	&tmp = t1.valor_enter();
-	if(tmp != NULL) cout << *tmp << endl;
-	//valor_racional
-	racional r = t1.valor_racional();
-	cout << r.num() << '/' << r.denom() << endl;
-	//valor_real
-	cout << t1.valor_real() << endl;
-	//identificador_variable
-	cout << t1.identificador_variable() << endl;
-
-	/*string str;
+	string str;
 	token Arr_tk[MAX_SIZE];
 	unsigned int i = 0;
 
@@ -125,7 +109,7 @@ int main()
 		else if(ord == "idvar") {
 			cout << tmp.identificador_variable() << endl;
 		}	
-	}*/
+	}
 	//proves void pointer
 	/*int x = 10;
 	void *p = &x;

@@ -1,0 +1,88 @@
+template <typename T>
+class Arbre {
+public:
+	template <typename T>
+	Arbre<T>::Arbre() : _arrel(NULL) {
+	}
+
+	template <typename T> 
+	Arbre<T>::Arbre(const T &x) throw(error) {
+		_arrel = new node;
+		try {
+			_arrel -> info = x;
+			_arrel -> seggerm = NULL;
+			_arrel -> primf = NULL;
+		}
+		catch (error) {
+			delete _arrel;
+			throw;
+		}
+	}
+
+	template <typename T>
+	typename Arbre<T>::node* Arbre<T>::copia_arbre(node* p)
+	throw(error) {
+		node* aux = NULL;
+		if (p != NULL) {
+			aux = new node;
+			try {
+			aux -> info = p -> info;
+			aux -> primf = aux -> seggerm = NULL;
+			aux -> primf = copia_arbre(p -> primf);
+			aux -> seggerm = copia_arbre(p -> seggerm);
+			}
+			catch (error) {
+				destrueix_arbre(aux);
+			}
+		}
+		return aux;
+	}
+
+	template <typename T>
+	Arbre<T>::Arbre(const Arbre<T> &a) throw(error) {
+		_arrel = copia_arbre(a._arrel);
+	}
+
+	template <typename T>
+	Arbre<T>& Arbre<T>::operator=(const Arbre<T> &a)
+	throw(error) {
+		Arbre<T> tmp(a);
+		node* aux = _arrel;
+		_arrel = tmp._arrel;
+		tmp._arrel = aux;
+		return *this;
+	}
+
+	template <typename T>
+	void Arbre<T>::destrueix_arbre(node* p) throw() {
+		if (p != NULL) {
+		destrueix_arbre(p -> primf);
+		destrueix_arbre(p -> seggerm);
+		delete p;
+		}
+	}
+
+	template <typename T>
+	Arbre<T>::~Arbre() throw() {
+		destrueix_arbre(_arrel);
+	}
+
+	template <typename T>
+	void Arbre<T>::afegir_fill(Arbre<T> &a) throw(error) {
+		if (_arrel == NULL or a._arrel == NULL or a._arrel -> seggerm != NULL) {
+			throw error(ArbreInvalid);
+		}
+		a._arrel -> seggerm = _arrel -> primf;
+		_arrel -> primf = a._arrel;
+		a._arrel = NULL;
+	}
+private:
+	struct node {
+		T info;
+		node* primf;
+		node* seggerm;
+	};
+	node* _arrel;
+	node* copia_arbre(node* p) throw(error);
+	void destrueix_arbre(node* p) throw();
+};

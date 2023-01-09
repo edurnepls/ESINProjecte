@@ -48,10 +48,6 @@ expressio::~expressio() throw(error)
 	destrueix_arbre(_arrel);
 }
 
-expressio& expressio::operator=(expressio && e) throw(error){
-	_arrel = e._arrel;
-	return *this;
-}
 
 // Retorna cert si i només si s'aplica a l'expressió buida.
 bool expressio::operator bool() const throw()
